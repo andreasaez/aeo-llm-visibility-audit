@@ -70,6 +70,84 @@ Match the house style of `abm-first-repositioning-audit.md`:
 - **Where-to-update map** — page/file → exact change, so the fixes are actionable without re-deriving them.
 - **Verification appendix** — for every live-surface claim, record the canonical fetch result, the cache-busted fetch result, and the timestamp.
 
+Produce a tiered content backlog. **High-priority topics get a full brief. Medium/low topics get a summary row only.** Aim for 3–5 high-priority topics and up to 10 medium/low.
+
+**High-priority topics — full brief (one per topic):**
+
+- **Topic title**: A working blog post or content title
+- **Primary keyword**: The exact keyword to target
+- **Secondary keywords**: 2–3 supporting terms
+- **Monthly search volume**: From Semrush or Ahrefs
+- **Competitor owning it**: Who currently ranks #1
+- **Content type**: Definition/explainer, How-to guide, Comparison, Strategic guide, or FAQ/AEO target
+- **Topic pillar**: Revenue Content & ROI / ABM / Content Intelligence & Intent Data / AI Content Creation
+- **URL slug**: Suggested slug — lowercase, hyphenated, trailing slash (e.g. `/blog/abm-content-strategy/`)
+- **AEO angle**: The specific question this content answers directly in sentence 1
+- **Non-commodity hook**: One original angle, data point, or contrarian position that lifts this above what competitors already cover
+- **Cannibalisation risk**: Yes / No
+- **Author suggestion**: Nick, Andrea, Steff, Elliott — or guest contributor
+- **Prompt-ready brief**: 2–3 sentences a writer or AI could use to start the post immediately. Include primary keyword, AEO angle, non-commodity hook, and one differentiating point Turtl should make.
+
+**Medium/low priority topics — summary table:**
+
+| Topic title | Primary keyword | Volume | Competitor #1 | Priority | Cannibalisation risk |
+|-------------|----------------|--------|---------------|----------|----------------------|
+| ... | ... | ... | ... | M/L | Y/N |
+
+High priority items must be genuinely winnable — not dominated by DA 80+ sites across all results.
+
+
+# AEO/SEO content action plan — [Month Year]
+
+## TL;DR
+3–4 sentences. Most important signal this month + single highest-priority action.
+Include any ⚠️ data gap warnings here (missing GSC, connector failures, etc.)
+Include any threshold flags from LLM visibility (critical AEO gap, AEO regression, displacement risk).
+
+## Strategic health check
+[Output from Step 8]
+
+## What the data says
+
+### Technical health (Semrush site audit)
+Issues worth acting on this month. Site health score vs last month. Anything suppressing rankings or AEO visibility.
+
+### Rankings (Semrush)
+Key movements — what dropped, what climbed, what hit page 2 and is close to breaking through.
+
+### Content gaps (Semrush + Ahrefs)
+Topic clusters Turtl is missing entirely. Which competitor owns each. Estimated traffic at stake.
+
+### Backlinks and authority (Ahrefs)
+DR change vs last month, referring domain change, notable new or lost links.
+
+### Converting content (HubSpot)
+What's actually driving pipeline. Any high-traffic pages that aren't converting.
+
+### AEO gaps (GSC — if available)
+Queries with high impressions and low CTR. Pages losing clicks. Direct answer opportunities.
+If GSC unavailable: note missing and skip section.
+
+### LLM visibility
+Visibility table from Step 7. Overall % per LLM vs prior month. Competitor share of voice. Any threshold flags.
+
+## Content backlog — topics to write
+[High-priority full briefs, then medium/low summary table from Step 9]
+
+## Quick wins — existing content to update
+Posts that rank 11–20 and need a refresh to break into top 10. Or high-traffic posts losing ground.
+For each: page URL, current position, recommended update action.
+
+## Watchlist
+Signals that aren't actionable yet but need monitoring next month.
+
+## Priorities this month
+Numbered list of 3–5 concrete actions, ranked by impact. Be specific — name the post, the keyword, the action.
+```
+
+After saving, confirm the file path and share it in this session.
+
+
 ---
 
 ## Notes

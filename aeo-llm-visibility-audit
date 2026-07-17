@@ -1,0 +1,77 @@
+---
+name: aeo-llm-visibility-audit
+description: Run an ad-hoc audit of how a site (default [YourCompany.com]) is picked up by LLMs and AI answer engines (AEO/GEO). Use when the user asks "how do LLMs see us", "are we cited by ChatGPT/Perplexity/Google AI", "AEO audit", "LLM visibility", "why aren't we showing up in AI answers", or wants to assess AI-engine pickup for a positioning angle. This is the ad-hoc counterpart to aeoseo-monthly-orchestration-skill — use this when there is no monthly data export or AEO Scorecard to drive the analysis. For the scheduled monthly orchestration that requires raw exports, use aeoseo-monthly-orchestration-skill instead.
+metadata:
+  version: 1.0.
+---
+
+# AEO / LLM Visibility Audit
+
+Audit how a site is surfaced by LLMs and AI answer engines, and produce a prioritised list of changes. This skill exists because the monthly orchestration skill needs raw data exports and an AEO Scorecard as inputs, so it cannot serve an ad-hoc "how do LLMs see us" question. This one is assembled from live checks instead.
+
+Default subject is [www.yourwebsite.com]. Confirm the domain and the angle (e.g. "ABM-first positioning") before starting.
+
+---
+
+## The three layers (audit all three — do not stop at on-site)
+
+AEO visibility splits into three layers that need different evidence and have different time horizons. The most common failure is auditing only the on-site technical layer and declaring victory.
+
+1. **Training priors** — what the model already "knows" about the brand from pre-training. Slow to change, cannot be edited directly, shifts only as the open web corpus shifts.
+2. **Retrieval layer** — what gets pulled into an answer at query time: your own indexed pages, and third-party pages (review sites, listicles, comparisons) that mention you. Medium time horizon.
+3. **Technical surface** — whether AI crawlers can access and parse your site at all. Fastest to fix, fully in your control.
+
+Map every finding to one of these layers so the fix and the realistic timeline are clear.
+
+---
+
+## The 5-step audit
+
+### Step 1 — Technical surface check
+- Fetch `robots.txt` and confirm whether AI crawlers are allowed: `GPTBot`, `OAI-SearchBot`, `ClaudeBot`, `anthropic-ai`, `PerplexityBot`, `Google-Extended`, `CCBot`. Note any that are blocked — a block here invalidates everything downstream.
+- Fetch `llms.txt` (and `llms-full.txt` if present). Review whether it accurately describes the brand and points to the right pages.
+- Verify structured data: Organization, Product, FAQPage, Article schema on key pages. Use validator.schema.org.
+
+### Step 2 — Retrieval layer: own pages (GSC fan-out query pull)
+- Pull Google Search Console query data and filter for **AI fan-out query patterns**: long, unnaturally phrased queries with high impressions but near-zero CTR at a high average position. These are the sub-queries AI engines decompose a prompt into and fan out across the web.
+- Regex starting point for fan-out detection (tune per site): queries with 8+ words, or containing question scaffolding ("how do I", "what is the best", "compared to", "for B2B"), high impressions, CTR under ~1%, position under ~15.
+- High impressions + near-zero CTR at a strong position is the signature of being retrieved by an engine but not clicked by a human — i.e. you are feeding AI answers without getting the visit.
+
+### Step 3 — Retrieval layer: category signal (Semrush organic footprint)
+- Pull the organic footprint to assess whether the corpus sends a coherent **category signal**. If the brand wants to be retrieved for "ABM content platform" but ranks for a scatter of unrelated terms, the corpus is diluting the signal.
+- Assess topical concentration, not just volume.
+
+### Step 4 — Retrieval layer: third-party citation landscape
+- Identify the review-site categories and listicles ("best X tools", "top N platforms for Y") that AI engines lean on for recommendation queries.
+- **Verify listicle inclusion or exclusion by fetching at least two sources directly. Never conclude inclusion/exclusion from a search snippet alone.** Fetch the page and grep for the brand name. Snippets routinely miss or mis-state list membership.
+
+### Step 5 — Training-data prior assessment
+- Assess what the model already associates with the brand absent retrieval (ask a clean-context model to describe the brand/category and see what surfaces).
+- Distinguish "the model has a wrong/old prior" (slow fix, needs corpus change) from "the model has no prior" (newer/smaller brand) — the strategies differ.
+
+---
+
+## Verification rules (these are where past audits went wrong)
+
+**Re-verify live surfaces before repeating any prior finding.** If you cite an earlier audit's claim about a live page ("/platform/create still uses content-creation framing"), re-fetch that page first. Internal audit docs age faster than external ones when an active team is shipping fixes — the more operational the team, the shorter the shelf life of any audit. Any "still" claim about a live surface requires a live check. If you cannot re-verify, date-stamp the claim explicitly: "as of [audit date], not re-verified."
+
+**Fetch both the canonical URL and a cache-busted URL, and report them separately.** A CDN (e.g. HubSpot) can serve stale pre-update HTML at the canonical URL while logged-in users and origin see the new page. Plain re-fetching is not enough — only a cache-busting query string (`?v=<timestamp>`) reveals origin truth.
+- A mismatch between the two is itself a critical finding: **shipped copy that crawlers cannot see.**
+- There are always two versions of a cached page — what the team shipped, and what the world is served. The delta between them is often the single most actionable item in the audit.
+- Publishing-process recommendation to include when a mismatch is found: cache purge + logged-out canonical check should be part of the definition of done for any page update.
+
+---
+
+## Output format
+
+Match the house style of `abm-first-repositioning-audit.md`:
+- **Executive summary** — top 3–5 findings, each tagged with its layer (training / retrieval / technical) and time horizon.
+- **Prioritised changes** — ranked by impact × effort, each with the layer it affects.
+- **Where-to-update map** — page/file → exact change, so the fixes are actionable without re-deriving them.
+- **Verification appendix** — for every live-surface claim, record the canonical fetch result, the cache-busted fetch result, and the timestamp.
+
+---
+
+## Notes
+- This skill does ad-hoc audits. For the recurring monthly version driven by data exports + AEO Scorecard, use `aeoseo-monthly-orchestration-skill`.
+- Respect the web-fetch restrictions: if a fetch tool reports a domain cannot be retrieved, do not route around it with other tooling.

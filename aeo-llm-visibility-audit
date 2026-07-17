@@ -73,5 +73,5 @@ Match the house style of `abm-first-repositioning-audit.md`:
 ---
 
 ## Notes
-- This skill does ad-hoc audits. For the recurring monthly version driven by data exports + AEO Scorecard, use `aeoseo-monthly-orchestration-skill`.
+- This skill does ad-hoc audits. For the recurring monthly version driven by data exports + AEO Scorecard, use a monthly orchestration skill.
 - Respect the web-fetch restrictions: if a fetch tool reports a domain cannot be retrieved, do not route around it with other tooling.
